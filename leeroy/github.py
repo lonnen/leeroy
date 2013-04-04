@@ -71,8 +71,8 @@ def update_status(app, repo_config, repo_name, sha, state, desc,
 def register_github_hooks(app):
     with app.app_context():
         github_endpoint = "http://%s%s" % (
-                app.config["GITHUB_NOTIFICATION_SERVER_NAME"],
-                url_for("base.github_notification", _external=False))
+            app.config["GITHUB_NOTIFICATION_SERVER_NAME"],
+            url_for("github_notification", _external=False))
 
     for repo_config in app.config["REPOSITORIES"]:
         repo_name = repo_config["github_repo"]
@@ -99,7 +99,7 @@ def register_github_hooks(app):
             params = {"name": "web",
                       "config": {"url": github_endpoint,
                                  "content_type": "json"},
-                       "events": ["pull_request"]}
+                      "events": ["pull_request"]}
             headers = {"Content-Type": "application/json"}
 
             response = requests.post(url,
