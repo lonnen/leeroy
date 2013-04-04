@@ -176,6 +176,9 @@ def run_app():
                       action="store", type="int", dest="port",
                       default=5000,
                       help="specify the port number on which to run")
+    parser.add_option("-r", "--register",
+                      action="store_true", dest="register", default=True,
+                      help="register github hooks")
 
     (options, args) = parser.parse_args()
 
@@ -194,11 +197,11 @@ def run_app():
 
         sys.exit(0)
 
+    if options.register:
+        register_github_hooks(app)
+
     app.debug = options.debug
     app.run(host=options.host, port=options.port)
-
-
-register_github_hooks(app)
 
 
 if __name__ == '__main__':
